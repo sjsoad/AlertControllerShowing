@@ -11,14 +11,14 @@ import UIKit
 import AlertActionBuilder
 import SKAlertControllerBuilder
 
-public protocol AlertControllerShowing {
+public protocol AlertControllerShowingInterface {
     
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
                              preferredStyle: UIAlertControllerStyle, completion: (() -> Void)?)
     
 }
 
-extension AlertControllerShowing where Self: UIViewController {
+extension AlertControllerShowingInterface where Self: UIViewController {
     
     public func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
                                     preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil) {
