@@ -20,8 +20,8 @@ public protocol AlertControllerShowing {
 
 extension AlertControllerShowing where Self: UIViewController {
     
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
-                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil) {
+    public func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
+                                    preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController.build(title: title, message: message, actionsConfiguration: actionsConfiguration,
                                                       preferredStyle: preferredStyle)
         present(alertController, animated: true, completion: completion)
