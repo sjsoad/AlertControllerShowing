@@ -21,9 +21,16 @@ public protocol AlertControllerShowingInterface {
 extension AlertControllerShowingInterface where Self: UIViewController {
     
     public func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
-                                    preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil) {
+                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController.build(title: title, message: message, actionsConfiguration: actionsConfiguration,
                                                       preferredStyle: preferredStyle)
+        if let popoverPresentationController = alertController.popoverPresentationController {
+            guard let popoverPresentationDelegate = self as? UIPopoverPresentationControllerDelegate else {
+                print("WARNING: UIViewController should confirm to UIPopoverPresentationControllerDelegate. Implement method -prepareForPopoverPresentation")
+                return
+            }
+            popoverPresentationController.delegate = popoverPresentationDelegate
+        }
         present(alertController, animated: true, completion: completion)
     }
     
