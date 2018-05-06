@@ -26,8 +26,7 @@ extension AlertControllerShowingInterface where Self: UIViewController {
                                                       preferredStyle: preferredStyle)
         if let popoverPresentationController = alertController.popoverPresentationController {
             guard let popoverPresentationDelegate = self as? UIPopoverPresentationControllerDelegate else {
-                print("WARNING: UIViewController should confirm to UIPopoverPresentationControllerDelegate. Implement method -prepareForPopoverPresentation")
-                return
+                fatalError("WARNING: UIViewController should confirm to UIPopoverPresentationControllerDelegate. Implement method -prepareForPopoverPresentation")
             }
             popoverPresentationController.delegate = popoverPresentationDelegate
         }
