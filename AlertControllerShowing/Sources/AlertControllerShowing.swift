@@ -18,9 +18,9 @@ public protocol AlertControllerShowingInterface {
     
 }
 
-extension AlertControllerShowingInterface where Self: UIViewController {
+public extension AlertControllerShowingInterface where Self: UIViewController {
     
-    public func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
                              preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController.build(title: title, message: message, actionsConfiguration: actionsConfiguration,
                                                       preferredStyle: preferredStyle)
