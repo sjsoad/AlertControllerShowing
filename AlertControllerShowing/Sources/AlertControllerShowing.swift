@@ -11,24 +11,26 @@ import UIKit
 import AlertActionBuilder
 import SKAlertControllerBuilder
 
+public typealias PopoveConfigurationHandler = ((UIPopoverPresentationController) -> Void)
+
 public protocol AlertControllerShowingInterface {
     
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
-                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)?)
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
+                             completion: (() -> Void)?, popoveConfigurationHandler: PopoveConfigurationHandler?)
     
 }
 
 public extension AlertControllerShowingInterface where Self: UIViewController {
     
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig],
-                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil) {
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
+                             completion: (() -> Void)? = nil, popoveConfigurationHandler: PopoveConfigurationHandler? = nil) {
         let alertController = UIAlertController.build(title: title, message: message, actionsConfiguration: actionsConfiguration,
                                                       preferredStyle: preferredStyle)
-        if let popoverPresentationController = alertController.popoverPresentationController {
-            guard let popoverPresentationDelegate = self as? UIPopoverPresentationControllerDelegate else {
-                fatalError("WARNING: UIViewController should confirm to UIPopoverPresentationControllerDelegate. Implement method -prepareForPopoverPresentation")
-            }
-            popoverPresentationController.delegate = popoverPresentationDelegate
+        if let popoverPresentationController = alertController.popoverPresentationController,
+            let popoveConfigurationHandler = popoveConfigurationHandler {
+            popoveConfigurationHandler(popoverPresentationController)
+        } else {
+            assertionFailure("Please, pass PopoveConfigurationHandler, because it is required in your case of presentation")
         }
         present(alertController, animated: true, completion: completion)
     }
