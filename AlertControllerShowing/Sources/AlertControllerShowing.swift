@@ -35,11 +35,12 @@ public extension AlertControllerShowingInterface where Self: UIViewController {
                              completion: (() -> Void)? = nil, popoveConfigurationHandler: PopoveConfigurationHandler? = nil) {
         let alertController = UIAlertController.build(title: title, message: message, actionsConfiguration: actionsConfiguration,
                                                       preferredStyle: preferredStyle)
-        if let popoverPresentationController = alertController.popoverPresentationController,
-            let popoveConfigurationHandler = popoveConfigurationHandler {
-            popoveConfigurationHandler(popoverPresentationController)
-        } else {
-            assertionFailure("Please, pass PopoveConfigurationHandler, because it is required in your case of presentation")
+        if let popoverPresentationController = alertController.popoverPresentationController {
+            if let popoveConfigurationHandler = popoveConfigurationHandler {
+                popoveConfigurationHandler(popoverPresentationController)
+            } else {
+                assertionFailure("Please, pass PopoveConfigurationHandler, because it is required in your case of presentation")
+            }
         }
         present(alertController, animated: true, completion: completion)
     }
