@@ -28,7 +28,7 @@ public extension AlertControllerShowingInterface where Self: UIViewController {
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
                              completion: (() -> Void)? = nil) {
         showAlertController(with: title, message: message, actionsConfiguration: actionsConfiguration, preferredStyle: preferredStyle,
-                            completion: completion)
+                            completion: completion, popoveConfigurationHandler: nil)
     }
     
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
