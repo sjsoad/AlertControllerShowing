@@ -13,23 +13,15 @@ import SKAlertControllerBuilder
 
 public typealias PopoveConfigurationHandler = ((UIPopoverPresentationController) -> Void)
 
-public protocol AlertControllerShowingInterface {
+public protocol AlertControllerShowingInterface where Self: UIViewController {
     
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
-                             completion: (() -> Void)?)
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
                              completion: (() -> Void)?, popoveConfigurationHandler: PopoveConfigurationHandler?)
     
     
 }
 
-public extension AlertControllerShowingInterface where Self: UIViewController {
-    
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
-                             completion: (() -> Void)? = nil) {
-        showAlertController(with: title, message: message, actionsConfiguration: actionsConfiguration, preferredStyle: preferredStyle,
-                            completion: completion, popoveConfigurationHandler: nil)
-    }
+public extension AlertControllerShowingInterface {
     
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
                              completion: (() -> Void)? = nil, popoveConfigurationHandler: PopoveConfigurationHandler? = nil) {
