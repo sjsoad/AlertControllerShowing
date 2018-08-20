@@ -15,7 +15,7 @@ public typealias PopoveConfigurationHandler = ((UIPopoverPresentationController)
 
 public protocol AlertControllerShowingInterface where Self: UIViewController {
     
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider], preferredStyle: UIAlertControllerStyle,
                              completion: (() -> Void)?, popoveConfigurationHandler: PopoveConfigurationHandler?)
     
     
@@ -23,7 +23,7 @@ public protocol AlertControllerShowingInterface where Self: UIViewController {
 
 public extension AlertControllerShowingInterface {
     
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfig], preferredStyle: UIAlertControllerStyle,
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider], preferredStyle: UIAlertControllerStyle,
                              completion: (() -> Void)? = nil, popoveConfigurationHandler: PopoveConfigurationHandler? = nil) {
         let alertController = UIAlertController(title: title, message: message, actionsConfiguration: actionsConfiguration,
                                                 preferredStyle: preferredStyle)
