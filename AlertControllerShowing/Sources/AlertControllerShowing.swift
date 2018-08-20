@@ -13,26 +13,43 @@ import SKAlertControllerBuilder
 
 public typealias PopoveConfigurationHandler = ((UIPopoverPresentationController) -> Void)
 
-public protocol AlertControllerShowingInterface where Self: UIViewController {
+public protocol AlertControllerShowingInterface {
     
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider], preferredStyle: UIAlertControllerStyle,
-                             completion: (() -> Void)?, popoveConfigurationHandler: PopoveConfigurationHandler?)
-    
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
+                             preferredStyle: UIAlertControllerStyle)
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
+                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)?)
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
+                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)?,
+                             popoveConfigurationHandler: PopoveConfigurationHandler?)
     
 }
 
-public extension AlertControllerShowingInterface {
+public extension AlertControllerShowingInterface where Self: UIViewController {
     
-    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider], preferredStyle: UIAlertControllerStyle,
-                             completion: (() -> Void)? = nil, popoveConfigurationHandler: PopoveConfigurationHandler? = nil) {
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
+                             preferredStyle: UIAlertControllerStyle) {
+        showAlertController(with: title, message: message, actionsConfiguration: actionsConfiguration, preferredStyle: preferredStyle,
+                            completion: nil, popoveConfigurationHandler: nil)
+    }
+    
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
+                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)?) {
+        showAlertController(with: title, message: message, actionsConfiguration: actionsConfiguration, preferredStyle: preferredStyle,
+                            completion: completion, popoveConfigurationHandler: nil)
+    }
+    
+    func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
+                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil,
+                             popoveConfigurationHandler: PopoveConfigurationHandler? = nil) {
         let alertController = UIAlertController(title: title, message: message, actionsConfiguration: actionsConfiguration,
                                                 preferredStyle: preferredStyle)
         if let popoverPresentationController = alertController.popoverPresentationController {
-            if let popoveConfigurationHandler = popoveConfigurationHandler {
-                popoveConfigurationHandler(popoverPresentationController)
-            } else {
+            guard let popoveConfigurationHandler = popoveConfigurationHandler else {
                 assertionFailure("Please, pass PopoveConfigurationHandler, because it is required in your case of presentation")
+                return
             }
+            popoveConfigurationHandler(popoverPresentationController)
         }
         present(alertController, animated: true, completion: completion)
     }
