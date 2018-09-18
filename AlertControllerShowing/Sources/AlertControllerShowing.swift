@@ -16,11 +16,11 @@ public typealias PopoveConfigurationHandler = ((UIPopoverPresentationController)
 public protocol AlertControllerShowingInterface {
     
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
-                             preferredStyle: UIAlertControllerStyle)
+                             preferredStyle: UIAlertController.Style)
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
-                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)?)
+                             preferredStyle: UIAlertController.Style, completion: (() -> Void)?)
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
-                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)?,
+                             preferredStyle: UIAlertController.Style, completion: (() -> Void)?,
                              popoveConfigurationHandler: PopoveConfigurationHandler?)
     
 }
@@ -28,19 +28,19 @@ public protocol AlertControllerShowingInterface {
 public extension AlertControllerShowingInterface where Self: UIViewController {
     
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
-                             preferredStyle: UIAlertControllerStyle) {
+                             preferredStyle: UIAlertController.Style) {
         showAlertController(with: title, message: message, actionsConfiguration: actionsConfiguration, preferredStyle: preferredStyle,
                             completion: nil, popoveConfigurationHandler: nil)
     }
     
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
-                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)?) {
+                             preferredStyle: UIAlertController.Style, completion: (() -> Void)?) {
         showAlertController(with: title, message: message, actionsConfiguration: actionsConfiguration, preferredStyle: preferredStyle,
                             completion: completion, popoveConfigurationHandler: nil)
     }
     
     func showAlertController(with title: String?, message: String?, actionsConfiguration: [AlertActionConfigProvider],
-                             preferredStyle: UIAlertControllerStyle, completion: (() -> Void)? = nil,
+                             preferredStyle: UIAlertController.Style, completion: (() -> Void)? = nil,
                              popoveConfigurationHandler: PopoveConfigurationHandler? = nil) {
         let alertController = UIAlertController(title: title, message: message, actionsConfiguration: actionsConfiguration,
                                                 preferredStyle: preferredStyle)
